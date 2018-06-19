@@ -25,7 +25,11 @@ function rereq(options, done) {
   req.end();
 }
 
-export default function request({method, host, path, qs, agent}) {
+export function resetCookie() {
+  cookieVal = undefined;
+}
+
+export function request({method, host, path, qs, agent}) {
   const options = {
     host,
     method,
@@ -45,6 +49,7 @@ export default function request({method, host, path, qs, agent}) {
       });
 
       res.on('end', () => {
+        console.log(res.statusCode);
         if (res.statusCode === 429 && res.headers['set-cookie']) {
           // Fix for the "too many requests" issue
           // Look for the set-cookie header and re-request
