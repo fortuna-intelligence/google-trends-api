@@ -49,7 +49,6 @@ export function request({method, host, path, qs, agent}) {
       });
 
       res.on('end', () => {
-        console.log(res.statusCode);
         if (res.statusCode === 429 && res.headers['set-cookie']) {
           // Fix for the "too many requests" issue
           // Look for the set-cookie header and re-request
